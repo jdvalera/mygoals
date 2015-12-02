@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+<br>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class = "row">
+	<div class="col-md-2"></div>
+	<div class="flash col-md-8">
+	
+          
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+</div>
+<div class="col-md-2"></div>
+</div>
+{% endif %}
+{% endwith %}
+
+<div class="row">
+	<div class="col-md-3"></div>
+	<div>
+	<div class="col-md-2">
+		<img class="img-responsive center-block img-circle" src="{{user.picture}}" style="height:200px;"/>
+	</div>
+	<div class="col-md-4">
+	<h1>{{user.username}}</h1>
+	<h4>{{user.email}}</h4>
+	<p>{{user.desc}}</p>
+	</div>
+	<div class="col-md-3"></div>
+</div>
+<div class="row">
+	<div class="col-md-12"><h1 class="text-center">Goals</h1></div>
+<div>
+<div class = "row">
+	<div class="col-md-6">
+		<div class="row bg-primary">
+			<h3 class="text-center">Active</h3>
+		</div>
+		<br>
+		{% for goal in goals %}
+			{% if goal.isDone == 0 %}
+				{% if goal.isPrivate == 0 or (goal.isPrivate == 1 and session['user_id'] == goal.user_id)%}
+			<div class="row well">
+				<!-- <div class="col-md-1"></div> -->
+				<div class="col-md-4">
+					<img class="img-thumbnail center-block" src="{{goal.picture}}" style="width: 100px; height: 100px;"/>
+				</div>
+				<div class="col-md-8">
+					<p><a href="{{url_for('showGoal', goal_id = goal.id)}}"><strong>{{goal.title}}</strong></a></p>
+					<p><strong>Date Created:</strong> <small>
+						<script>document.write(moment('{{goal.timestamp.strftime("%Y-%m-%dT%H:%M:%S Z")}}').format('l'));</script> 
+					</small></p>
+					
+					<!-- Show comment or comments depending on number of comments -->
+					 {% if goal.comments|length == 1%}
+					 <p><a href="{{url_for('showGoal', goal_id = goal.id)}}">{{goal.comments|length}} Comment</a></p>
+					 {% elif goal.comments|length == 0 %}
+					 <p><a href="{{url_for('showGoal', goal_id = goal.id)}}">Comment</a></p>
+					 {% else %}
+					 <p><a href="{{url_for('showGoal', goal_id = goal.id)}}">{{goal.comments|length}} Comments</a></p>
+					 {% endif %}
+
+					<!-- Only show the edit/complete/delete buttons if right user -->
+					{% if goal.user_id == session['user_id']%}
+					<a href = "{{url_for('editGoal', user_id = goal.user_id, goal_id = goal.id)}}">
+					<button class="btn btn-primary">
+					Edit</button>
+					</a>
+
+					<a href = "{{url_for('completeGoal', user_id = goal.user_id, goal_id = goal.id)}}">
+					<button class="btn btn-success">
+					Complete</button>
+					</a>
+
+					<a href = "{{url_for('deleteGoal', user_id = goal.user_id, goal_id = goal.id)}}">
+					<button class="btn btn-danger">
+					Delete</button>
+					</a>
+					{% endif %}
+
+				</div>
+			</div>
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+	</div>
+
+	<div class="col-md-6">
+		<div class="row bg-success">
+			<h3 class="text-center">Completed</h3>
+		</div>
+		<br>
+		{% for goal in goals %}
+			{% if goal.isDone == 1 %}
+				{% if goal.isPrivate == 0 or (goal.isPrivate == 1 and session['user_id'] == goal.user_id)%}
+			<div class="row well">
+				<div class="col-md-4">
+					<img class="img-thumbnail center-block" src="{{goal.picture}}" style="width: 100px; height: 100px;"/>
+				</div>
+				<div class="col-md-8">
+					<p><a href="{{url_for('showGoal', goal_id = goal.id)}}"><strong>{{goal.title}}</strong></a></p>
+					<p><strong>Date Created:</strong> 
+						<script>document.write(moment('{{goal.timestamp.strftime("%Y-%m-%dT%H:%M:%S Z")}}').format('l'));</script> </p>
+					 
+					 <!-- Show comment or comments depending on number of comments -->
+					 {% if goal.comments|length == 1%}
+					 <p><a href="{{url_for('showGoal', goal_id = goal.id)}}">{{goal.comments|length}} Comment</a></p>
+					 {% elif goal.comments|length == 0 %}
+					 <p><a href="{{url_for('showGoal', goal_id = goal.id)}}">Comment</a></p>
+					 {% else %}
+					 <p><a href="{{url_for('showGoal', goal_id = goal.id)}}">{{goal.comments|length}} Comments</a></p>
+					 {% endif %}
+
+					 <!-- Only show the edit/complete/delete buttons if right user -->
+					{% if goal.user_id == session['user_id']%}
+					<a href = "{{url_for('editGoal', user_id = goal.user_id, goal_id = goal.id)}}">
+					<button class="btn btn-primary">
+					Edit</button>
+					</a>
+
+					<a href = "{{url_for('deleteGoal', user_id = goal.user_id, goal_id = goal.id)}}">
+					<button class="btn btn-danger">
+					Delete</button>
+					</a>
+					{% endif %}
+
+				</div>
+				<!-- <div class="col-md-2"></div> -->
+			</div>
+			<!-- <hr> -->
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

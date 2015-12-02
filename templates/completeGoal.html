@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<h1 class="text-center">Complete Goal<h1>
+	</div>
+</div>
+
+<div class="row">
+	<h1> Completed your goal <span class="text-primary">{{goal.title}}</span> ?</h1>
+
+	<form action="#" method='post'>
+	<!-- CSRF Protection -->
+	<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+	
+	<button type="submit" class="btn btn-success">
+	Complete</button> 
+
+	<a href = "{{url_for('showProfile', user_id = goal.user_id)}}">
+	<button class="btn btn-default delete" type="button">
+	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+	</a>
+
+	</form>
+	
+</div>
+{% endblock %}

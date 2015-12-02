@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<br><br>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class = "row">
+	<div class="col-md-2"></div>
+	<div class="flash col-md-8">
+	
+          
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+</div>
+<div class="col-md-2"></div>
+</div>
+{% endif %}
+{% endwith %}
+
+<div class="jumbotron">
+	<div class="container">
+		<h1 class="text-center"><span class="banner">MyGoals</span></h1>
+	</div>
+</div>
+
+
+{% for goal in goals %}
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-8">
+					<div class="row well">
+				<div class="col-md-4">
+					<img class="img-thumbnail center-block" src="{{goal.Goal.picture}}" style="width: 150px; height: 150px;"/>
+				</div>
+				<div class="col-md-8">
+					<h4><a href="{{url_for('showGoal', goal_id = goal.Goal.id)}}">{{goal.Goal.title}}</a></h4>
+					<p>by <a href="{{url_for('showProfile', user_id=goal.Goal.user_id)}}"> {{goal.User.username}}</a></p>
+					{% if goal.Goal.isDone == 0 %}<p class="text-danger">Active Goal</p> {% else %} 
+					<p class="text-success"> Completed Goal</p> {% endif %}
+					<!-- Show date on user's local time -->
+					<p><strong>Date Created:</strong> 
+						<small><script>document.write(moment('{{goal.Goal.timestamp.strftime("%Y-%m-%dT%H:%M:%S Z")}}').format('lll'));</script></small> </p>
+
+					 <!-- Show comment or comments depending on number of comments -->
+					 {% if goal.Goal.comments|length == 1%}
+					 <p><a href="{{url_for('showGoal', goal_id = goal.Goal.id)}}">{{goal.Goal.comments|length}} Comment</a></p>
+					 {% elif goal.Goal.comments|length == 0 %}
+					 <p><a href="{{url_for('showGoal', goal_id = goal.Goal.id)}}">Comment</a></p>
+					 {% else %}
+					 <p><a href="{{url_for('showGoal', goal_id = goal.Goal.id)}}">{{goal.Goal.comments|length}} Comments</a></p>
+					 {% endif %}
+				</div>
+			</div>
+</div>
+				<div class="col-md-2"></div>
+			</div>
+
+	{% endfor %}
+{% endblock %}

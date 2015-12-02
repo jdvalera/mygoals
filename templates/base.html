@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/styles.css') }}">
+		<!-- Google Font -->
+		<link href='https://fonts.googleapis.com/css?family=Mountains+of+Christmas:400,700' rel='stylesheet' type='text/css'>
+		<!-- Timezone converter -->
+		<script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+		<script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+		<script src="//apis.google.com/js/platform.js?onload=start"> </script>
+		<!-- jQuery necessary for Bootstrap's JavaScript plugins) -->
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<!-- Bootstrap JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+
+	    <nav class="navbar navbar-inverse navbar-fixed-top">
+	    	<div class="container">
+	    		<div class="navbar-header">
+	    			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			      	</button>
+
+	    			<a class="navbar-brand" href="{{ url_for('showIndex') }}">
+	    				<span class="navbar-text navbar-banner">MyGoals</span>
+	    			</a>
+	    		</div>
+
+	    		{% if 'username' in session %}
+	    		<div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;" >
+	    			<ul class="nav navbar-nav navbar-right">
+	    				<li class="dropdown">
+	    					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+	    					aria-expanded="false">
+	    					<!-- <img class="img-circle" src="http://placehold.it/41x41"> -->
+	    					<img class="img-circle" src="{{session['picture']}}" style="width-max:41px; height:41px;" />
+	    					<span class="caret"></span></a>
+	    					<ul class="dropdown-menu">
+	    						<li><a href="{{ url_for('showProfile', user_id=session['user_id']) }}">My Profile</a></li>
+	    						<li><a href="{{ url_for('newGoal', user_id=session['user_id']) }}">Create Goal</a></li>
+	    						<li><a href="{{ url_for('editProfile', user_id=session['user_id']) }}">Edit Profile</a></li>
+	    						<li><a href="{{url_for('logout')}}">Logout</a></li>
+	    					</ul>
+	    				</li>
+	    			</ul>
+	    		</div>
+	    		{% else %}
+
+	    		<div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;" >
+	    			<ul class="nav navbar-nav navbar-right">
+	    				<li role="presentation"><a href="{{url_for('showLogin')}}"><button type="button" class="btn btn-success">Sign in</button></a></li>
+	    			</ul>
+	    		</div>
+
+	    		{% endif %}
+
+	    	</div>
+	    </nav>
+
+
+		<div class="container">
+			
+			{% block content %}
+			{% endblock %}
+
+		</div>
+		<div class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-10"></div>
+					<div class="col-md-2">
+					<p>
+					Feeds:
+					<a href="{{url_for('allGoalsJSON')}}">JSON</a>
+					•
+					<a href="{{url_for('allGoalsXML')}}">XML</a>
+					</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+
+	</body>
+</html>
