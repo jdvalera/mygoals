@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+<div class="row">
+	<div class="col-md-12">
+		<h1 class="text-center">Delete Comment<h1>
+	</div>
+</div>
+
+<div class="row">
+	<h1> Are you sure you want to delete comment ?</h1>
+
+	<form action="#" method='post'>
+	<!-- CSRF Protection -->
+	<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+	
+	<button type="submit" class="btn btn-default delete">
+	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button> 
+
+	<a href = "{{url_for('showGoal', goal_id = comment.goal_id)}}">
+	<button class="btn btn-default delete" type="button">
+	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+	</a>
+
+	</form>
+	
+</div>
+{% endblock %}

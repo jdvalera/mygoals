@@ -404,6 +404,28 @@ def deleteGoal(user_id, goal_id):
 	else:
 		return render_template('deleteGoal.html', goal = goalToDelete)
 
+@app.route('/user/<int:user_id>/comment/<int:comment_id>/delete/',
+	methods=['GET', 'POST'])
+def deleteComment(user_id, comment_id):
+	''' Handler function for deleting comments '''
+	commentToDelete = session.query(Comments).filter_by(id = comment_id).one()
+	creator = getUserInfo(commentToDelete.user_id)
+	goal_id = commentToDelete.goal_id
+
+	if 'username' not in login_session:
+		return redirect('/login')
+
+	if creator.id != login_session['user_id']:
+		return redirect('/')
+	
+	if request.method == 'POST':
+		session.delete(commentToDelete)
+		session.commit()
+		flash("Comment has been successfully deleted")
+		return redirect(url_for('showGoal', goal_id = goal_id))
+	else:
+		return render_template('deleteComment.html', comment = commentToDelete)
+
 @app.route('/user/<int:user_id>/<int:goal_id>/goal/complete/',
 	methods=['GET', 'POST'])
 def completeGoal(user_id, goal_id):
