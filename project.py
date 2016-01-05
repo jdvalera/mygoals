@@ -43,7 +43,7 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 csrf = SeaSurf(app)
 
 #Connect to Database and create database session
-engine = create_engine('postgres://iigxfodmrbheti:-RE8qLKecB78W5RQs98aeqvp7M@ec2-107-21-221-59.compute-1.amazonaws.com:5432/dfmhginorv44q4')
+engine = create_engine('postgres://grader@52.35.200.181/catalog')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)

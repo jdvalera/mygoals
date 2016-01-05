@@ -78,7 +78,7 @@ class Comments(Base):
      }
 
 
-engine = create_engine('postgres://iigxfodmrbheti:-RE8qLKecB78W5RQs98aeqvp7M@ec2-107-21-221-59.compute-1.amazonaws.com:5432/dfmhginorv44q4')
+engine = create_engine('postgres://grader@52.35.200.181/catalog')
  
 
 Base.metadata.create_all(engine)
