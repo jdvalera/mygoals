@@ -31,7 +31,7 @@ CLIENT_ID = json.loads(
 APPLICATION_NAME = "My Goals App"
 
 # File upload settings
-UPLOAD_FOLDER = 'var/www/catalog/catalog/mygoals/static/uploads'
+UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'JPG'])
 
 app = Flask(__name__)
