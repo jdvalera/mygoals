@@ -339,7 +339,7 @@ def editGoal(user_id, goal_id):
 		if file and allowed_file(file.filename):
 			# if file exists
 			# remove the previous picture
-			if editedGoal.picture[16:] in os.listdir(os.getcwd()+'/static/uploads/'):
+			if editedGoal.picture[16:] in os.listdir(os.getcwd()+'/var/www/catalog/catalog/mygoals/static/uploads/'):
 				os.remove(os.getcwd()+editedGoal.picture)
 
 			filename = secure_filename(file.filename)
@@ -395,7 +395,7 @@ def deleteGoal(user_id, goal_id):
 		# if file exists
 		# remove the picture
 		if goalToDelete.picture[16:] in os.listdir(
-			os.getcwd()+'/static/uploads/'):
+			os.getcwd()+'/var/www/catalog/catalog/mygoals/static/uploads/'):
 				os.remove(os.getcwd()+goalToDelete.picture)
 		session.delete(goalToDelete)
 		session.commit()
@@ -470,7 +470,7 @@ def editProfile(user_id):
 			# if file exists
 			# remove the previous picture
 			if editedUser.picture[16:] in os.listdir(
-				os.getcwd()+'/static/uploads/'):
+				os.getcwd()+'/var/www/catalog/catalog/mygoals/static/uploads/'):
 				os.remove(os.getcwd()+editedUser.picture)
 
 			filename = secure_filename(file.filename)
