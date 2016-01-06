@@ -78,7 +78,7 @@ class Comments(Base):
      }
 
 
-engine = create_engine('postgresql://catalog:catalog@52.35.200.181/catalog')
+engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
  
 
 Base.metadata.create_all(engine)
