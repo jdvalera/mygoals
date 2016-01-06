@@ -31,7 +31,7 @@ CLIENT_ID = json.loads(
 APPLICATION_NAME = "My Goals App"
 
 # File upload settings
-UPLOAD_FOLDER = 'static/uploads'
+UPLOAD_FOLDER = 'var/www/catalog/catalog/mygoals/static/uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'JPG'])
 
 app = Flask(__name__)
@@ -306,7 +306,9 @@ def newGoal(user_id):
 			# Give random unique file name
 			f_name = str(uuid.uuid4()) + ext
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], f_name))
-			newGoal.picture = os.path.join('/'+ app.config['UPLOAD_FOLDER'],
+			# newGoal.picture = os.path.join('/'+ app.config['UPLOAD_FOLDER'],
+			#  f_name)
+			newGoal.picture = os.path.join('/static/uploads/',
 			 f_name)
 
 		session.add(newGoal)
