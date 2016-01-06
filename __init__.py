@@ -350,7 +350,9 @@ def editGoal(user_id, goal_id):
 			f_name = str(uuid.uuid4()) + ext
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], f_name))
 			#change user picture
-			editedGoal.picture = os.path.join('/'+ app.config['UPLOAD_FOLDER'],
+			# editedGoal.picture = os.path.join('/'+ app.config['UPLOAD_FOLDER'],
+			#  f_name)
+			editedGoal.picture = os.path.join('/static/uploads/',
 			 f_name)
 
 		if request.form['title']:
@@ -481,8 +483,10 @@ def editProfile(user_id):
 			f_name = str(uuid.uuid4()) + ext
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], f_name))
 			#change user picture
-			editedUser.picture = os.path.join('/'+ app.config['UPLOAD_FOLDER'],
-			 f_name)
+			# editedUser.picture = os.path.join('/'+ app.config['UPLOAD_FOLDER'],
+			#  f_name)
+			editedUser.picture = os.path.join('/static/uploads/',
+			#  f_name)
 
 		if request.form['description']:
 			editedUser.desc = request.form['description']
