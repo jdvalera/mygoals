@@ -486,7 +486,7 @@ def editProfile(user_id):
 			# editedUser.picture = os.path.join('/'+ app.config['UPLOAD_FOLDER'],
 			#  f_name)
 			editedUser.picture = os.path.join('/static/uploads/',
-			#  f_name)
+			  f_name)
 
 		if request.form['description']:
 			editedUser.desc = request.form['description']
