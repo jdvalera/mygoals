@@ -342,7 +342,7 @@ def editGoal(user_id, goal_id):
 			# if file exists
 			# remove the previous picture
 			if editedGoal.picture[16:] in os.listdir(os.getcwd()+'/var/www/catalog/catalog/mygoals/static/uploads'):
-				os.remove(os.getcwd()+editedGoal.picture)
+				os.remove('/var/www/catalog/catalog/mygoals'+editedGoal.picture)
 
 			filename = secure_filename(file.filename)
 			ext = os.path.splitext(file.filename)[1]
@@ -400,7 +400,7 @@ def deleteGoal(user_id, goal_id):
 		# remove the picture
 		if goalToDelete.picture[16:] in os.listdir(
 			os.getcwd()+'/var/www/catalog/catalog/mygoals/static/uploads'):
-				os.remove(os.getcwd()+goalToDelete.picture)
+				os.remove('/var/www/catalog/catalog/mygoals'+goalToDelete.picture)
 		session.delete(goalToDelete)
 		session.commit()
 		flash("Goal `%s` has been successfully deleted" % goalToDelete.title)
