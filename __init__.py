@@ -475,7 +475,7 @@ def editProfile(user_id):
 			# remove the previous picture
 			if editedUser.picture[16:] in os.listdir(
 				os.getcwd()+'var/www/catalog/catalog/mygoals/static/uploads'):
-				os.remove(os.getcwd()+editedUser.picture)
+				os.remove('/var/www/catalog/catalog/mygoals'+editedUser.picture)
 
 			filename = secure_filename(file.filename)
 			ext = os.path.splitext(file.filename)[1]
