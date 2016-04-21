@@ -311,6 +311,7 @@ def newGoal(user_id):
 			newGoal.picture = os.path.join('/static/uploads/',
 			 f_name)
 
+
 		session.add(newGoal)
 		session.commit()
 
@@ -533,7 +534,7 @@ def userGoalsXML(user_id):
 	return response
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 	app.secret_key = 'super_secret_key'
 	app.debug = True
 	app.run()
