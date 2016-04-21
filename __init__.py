@@ -306,7 +306,9 @@ def newGoal(user_id):
 			# Give random unique file name
 			f_name = str(uuid.uuid4()) + ext
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], f_name))
-			newGoal.picture = os.path.join('/'+ app.config['UPLOAD_FOLDER'],
+			# newGoal.picture = os.path.join('/'+ app.config['UPLOAD_FOLDER'],
+			#  f_name)
+			newGoal.picture = os.path.join('/static/uploads/',
 			 f_name)
 
 		session.add(newGoal)
