@@ -38,7 +38,7 @@ app = Flask(__name__)
 # Config upload folder
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # max 16MB upload
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 # Config SeaSurf
 csrf = SeaSurf(app)
 
@@ -52,7 +52,7 @@ session = DBSession()
 # Local permission system methods
 def createUser(login_session):
 	''' Helper function for creating a user '''
-	newUser = User(username = login_session['username'], 
+	newUser = User(username = login_session['username'],
 		email = login_session['email'], picture = login_session['picture'])
 	session.add(newUser)
 	session.commit()
@@ -117,7 +117,7 @@ def gconnect():
 
   try:
       # Upgrade the authorization code into a credentials object
-      oauth_flow = flow_from_clientsecrets(r'/var/www/catalog/catalog/mygoals/client_secrets.json', scope='')
+      oauth_flow = flow_from_clientsecrets(r'/var/www/MyGoals/MyGoals/client_secrets.json', scope='')
       oauth_flow.redirect_uri = 'postmessage'
       credentials = oauth_flow.step2_exchange(code)
   except FlowExchangeError:
@@ -235,7 +235,7 @@ def gdisconnect():
 def showGoal(goal_id):
 	''' Handler function for a specific goal page'''
 	#Table join to be able to use User.username with userGoal variable
-	userGoal = session.query(User, Goal).filter(and_(User.id == Goal.user_id, 
+	userGoal = session.query(User, Goal).filter(and_(User.id == Goal.user_id,
 		Goal.id == goal_id)).one()
 
 	comments = session.query(User,Comments).filter(and_(
@@ -251,10 +251,10 @@ def showGoal(goal_id):
 
 			session.add(newComment)
 			session.commit()
-	
+
 		return redirect(url_for('showGoal', goal_id = goal_id))
 	else:
-		return render_template('showGoal.html', goal = userGoal, 
+		return render_template('showGoal.html', goal = userGoal,
 			comments = comments)
 
 @app.route('/user/<int:user_id>/')
@@ -318,7 +318,7 @@ def newGoal(user_id):
 		return redirect(url_for('showProfile', user_id = user_id))
 	else:
 		return render_template('newGoal.html')
-	
+
 @app.route('/user/<int:user_id>/goal/<int:goal_id>/edit/',
  methods=['GET', 'POST'])
 def editGoal(user_id, goal_id):
@@ -341,8 +341,8 @@ def editGoal(user_id, goal_id):
 		if file and allowed_file(file.filename):
 			# if file exists
 			# remove the previous picture
-			if editedGoal.picture[16:] in os.listdir(os.getcwd()+'/var/www/catalog/catalog/mygoals/static/uploads'):
-				os.remove('/var/www/catalog/catalog/mygoals'+editedGoal.picture)
+			if editedGoal.picture[16:] in os.listdir(os.getcwd()+'/var/www/MyGoals/MyGoals/static/uploads'):
+				os.remove('/var/www/MyGoals/MyGoals/'+editedGoal.picture)
 
 			filename = secure_filename(file.filename)
 			ext = os.path.splitext(file.filename)[1]
@@ -357,7 +357,7 @@ def editGoal(user_id, goal_id):
 
 		if request.form['title']:
 			editedGoal.title = request.form['title']
-			
+
 		if request.form['description']:
 			editedGoal.description = request.form['description']
 
@@ -378,7 +378,7 @@ def editGoal(user_id, goal_id):
 		flash("Goal `%s` has been edited" % editedGoal.title)
 		return redirect(url_for('showProfile', user_id = editedGoal.user_id))
 	else:
-		return render_template('editGoal.html', user_id = user_id, 
+		return render_template('editGoal.html', user_id = user_id,
 			goal_id = goal_id, item = editedGoal)
 
 @app.route('/user/<int:user_id>/goal/<int:goal_id>/delete/',
@@ -394,13 +394,13 @@ def deleteGoal(user_id, goal_id):
 
 	if creator.id != login_session['user_id']:
 		return redirect('/')
-	
+
 	if request.method == 'POST':
 		# if file exists
 		# remove the picture
 		if goalToDelete.picture[16:] in os.listdir(
-			os.getcwd()+'/var/www/catalog/catalog/mygoals/static/uploads'):
-				os.remove('/var/www/catalog/catalog/mygoals'+goalToDelete.picture)
+			os.getcwd()+'/var/www/MyGoals/MyGoals/static/uploads'):
+				os.remove('/var/www/MyGoals/MyGoals/'+goalToDelete.picture)
 		session.delete(goalToDelete)
 		session.commit()
 		flash("Goal `%s` has been successfully deleted" % goalToDelete.title)
@@ -421,7 +421,7 @@ def deleteComment(user_id, comment_id):
 
 	if creator.id != login_session['user_id']:
 		return redirect('/')
-	
+
 	if request.method == 'POST':
 		session.delete(commentToDelete)
 		session.commit()
@@ -441,12 +441,12 @@ def completeGoal(user_id, goal_id):
 		return redirect('/login')
 
 	if creator.id != login_session['user_id']:
-		return redirect('/')	
+		return redirect('/')
 
 	if request.method == 'POST':
 		goalToComplete.isDone = "1"
 		session.commit()
-		flash("Congratulations Goal `%s` has been completed!" 
+		flash("Congratulations Goal `%s` has been completed!"
 			% goalToComplete.title)
 		return redirect(url_for('showProfile', user_id=goalToComplete.user_id))
 	else:
@@ -474,8 +474,8 @@ def editProfile(user_id):
 			# if file exists
 			# remove the previous picture
 			if editedUser.picture[16:] in os.listdir(
-				os.getcwd()+'var/www/catalog/catalog/mygoals/static/uploads'):
-				os.remove('/var/www/catalog/catalog/mygoals'+editedUser.picture)
+				os.getcwd()+'/var/www/MyGoals/MyGoals/static/uploads'):
+				os.remove('/var/www/MyGoals/MyGoals/'+editedUser.picture)
 
 			filename = secure_filename(file.filename)
 			ext = os.path.splitext(file.filename)[1]
@@ -494,7 +494,7 @@ def editProfile(user_id):
 		session.add(editedUser)
 		session.commit()
 		flash("Profile has been successfully edited!")
-		return redirect(url_for('showProfile', 
+		return redirect(url_for('showProfile',
 			user_id = editedUser.id))
 	else:
 		return render_template('editProfile.html', user = editedUser)
@@ -531,7 +531,7 @@ def userGoalsXML(user_id):
 	response = make_response(template)
 	response.headers['Content-Type'] = 'application/xml'
 	return response
-    
+
 
 if __name__ == '__main__':
 	app.secret_key = 'super_secret_key'
