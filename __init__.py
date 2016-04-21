@@ -27,11 +27,11 @@ from flask.ext.seasurf import SeaSurf
 
 # Google login settings
 CLIENT_ID = json.loads(
-    open(r'/var/www/catalog/catalog/mygoals/client_secrets.json', 'r').read())['web']['client_id']
+    open(r'/var/www/MyGoals/MyGoals/client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "My Goals App"
 
 # File upload settings
-UPLOAD_FOLDER = 'var/www/catalog/catalog/mygoals/static/uploads'
+UPLOAD_FOLDER = 'var/www/MyGoals/MyGoals/static/uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'JPG'])
 
 app = Flask(__name__)
